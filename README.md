@@ -1,27 +1,27 @@
-# Valkyrie Anti-cheat
-An open source [FiveM](https://fivem.net) Anti-cheat, helping keep your server free of cheaters. No sketchy obfuscated files and runtime reloadable modules that keep you in control, Valkyrie aims to be your solution in preventing cheaters from wreaking havoc on your server.
+# AqquaAC Anti-cheat
+An open source [FiveM](https://fivem.net) Anti-cheat, helping keep your server free of cheaters. No sketchy obfuscated files and runtime reloadable modules that keep you in control, AqquaAC aims to be your solution in preventing cheaters from wreaking havoc on your server.
 
 # Disclaimer
 - No Anti-cheat is a silver bullet, especially not the paid versions, notice how most claim 99% protection against cheaters 😕. You as the server owner/developer should be taking an active role in preventing the exploitation of resources on your server because nothing is a substitute for good programming practices.
 
-- The `main` branch is pushed to regularly and may include breaking changes! Only code downloaded from the [releases](https://github.com/NotSomething0/Valkyrie/releases) section is considered to be stable.
+- The `main` branch is pushed to regularly and may include breaking changes! Only code downloaded from the [releases](https://github.com/Dev-NotAqua/AqquaAc-2/releases) section is considered to be stable.
 
 ## Getting started
 
-0. Ensure you have a non modified and up-to-date version of the [cfx-server-data chat resource](https://github.com/citizenfx/cfx-server-data/tree/master/resources/%5Bgameplay%5D/chat), Valkyrie uses the `registerMessageHook` export for message filtering, which is not available in older or some modified versions of the resource.
+0. Ensure you have a non modified and up-to-date version of the [cfx-server-data chat resource](https://github.com/citizenfx/cfx-server-data/tree/master/resources/%5Bgameplay%5D/chat), AqquaAC uses the `registerMessageHook` export for message filtering, which is not available in older or some modified versions of the resource.
 
-1. Download the most recent version from the [releases](https://github.com/NotSomething0/Valkyrie/releases) section on GitHub ("Valkyrie-version.zip")
+1. Download the most recent version from the [releases](https://github.com/Dev-NotAqua/AqquaAc-2/releases) section on GitHub ("AqquaAC-version.zip")
 
-2. Extract the contents from the zip file into `resources/Valkyrie`
+2. Extract the contents from the zip file into `resources/AqquaAC`
 
-3. Open your `server.cfg` file, and add the following, making sure `ensure Valkyrie` is added after the config file execution.
-  * `exec @Valkyrie/config.cfg`
-  * `exec @Valkyrie/permission.cfg`
-  * `ensure Valkyrie`
+3. Open your `server.cfg` file, and add the following, making sure `ensure AqquaAC` is added after the config file execution.
+* `exec @AqquaAC/config.cfg`
+* `exec @AqquaAC/permission.cfg`
+* `ensure AqquaAC`
 
 4. Save the server.cfg file then start your server
 
-5. You're done, you've installed Valkyrie! Now move on to the configuration portion of this README
+5. You're done, you've installed AqquaAC! Now move on to the configuration portion of this README
 
 ## Resource Configuration:
 Note 🗒️: These settings can be updated during runtime using the `vac:sync` command or by restarting the resource 
@@ -42,7 +42,7 @@ LOG_LEVEL {
 | vac:main:god_mode_check | false | Checks all players using GET_PLAYER_INVINCIBLE unless the "vac:invincibility" permission has been granted | bool |
 
 ### Entity Creation settings
-Best Practice 📈: It is recommed to use entity lockdown (sv_entityLockdown) and your own server side creation logic for better protection. A future implementation of Valkyrie may include a rudimentary example that can be used as a guide for server owners/developers.
+Best Practice 📈: It is recommed to use entity lockdown (sv_entityLockdown) and your own server side creation logic for better protection. A future implementation of AqquaAC may include a rudimentary example that can be used as a guide for server owners/developers.
 
 |      ConVar     | Default | Description | Parameter |
 | --------------- | ------- | ----------- | --------- |
@@ -62,7 +62,7 @@ If my understanding is correct the assetName is the parent "directory" (for lack
 
 |      ConVar     | Default | Description | Parameter(s) |
 | --------------- | ------- | ----------- | ---------- |
-| vac:connect:check_username_content | false | Should Valkyrie check username for prohibited content | bool |
+| vac:connect:check_username_content | false | Should AqquaAC check username for prohibited content | bool |
 | vac:connect:prohibited_username_content | [] | List of strings to check for in a connecting players username | list |
 
 ### Command options
@@ -125,7 +125,7 @@ This also comes with the downside of modifying all resource manifest files to in
 
 <b>Detect/Prevent connections with a VPN/Proxy</b>
 
-1. Valkyrie already purposefully skips over the IP addres of any player when saving identifiers. IP's are generally not static and have the chance of changing at any point making them unreliable for long term identification. 
+1. AqquaAC already purposefully skips over the IP addres of any player when saving identifiers. IP's are generally not static and have the chance of changing at any point making them unreliable for long term identification. 
 
 2. Most people using a proxy (including myself) don't have any bad intentions in mind and may just want to hide their network activity as an overall [strategy](https://www.ivpn.net/blog/why-you-dont-need-a-vpn/) to protect their online privacy. 
 
@@ -149,11 +149,11 @@ One of the many features offered by FiveM through state awareness mode aka OneSy
 
 ### Q. Dynamic Permission
 
-Resource creators may have legitimate use cases for wanting to make a player invinciple temporarily or permanetly, thankfully the FiveM permission system is dynamic so we can add these permissions to players during runtime. Valkyrie makes this very easy to implement using the addPermission and removePermission exports respectfully, an example implementation can be seen below.
+Resource creators may have legitimate use cases for wanting to make a player invinciple temporarily or permanetly, thankfully the FiveM permission system is dynamic so we can add these permissions to players during runtime. AqquaAC makes this very easy to implement using the addPermission and removePermission exports respectfully, an example implementation can be seen below.
 
 ```lua
 RegisterNetEvent('server:hospital:inpatient', function(data)
-  if exports["Valkyrie"]:addPermission(source, 'vac:godmode') then
+  if exports["AqquaAC"]:addPermission(source, 'vac:godmode') then
     SetPlayerInvincible(source, true)
   end
 
@@ -164,7 +164,7 @@ RegisterNetEvent('server:hospital:outpatient', function(data)
   -- Remove player enhancements before removing permission
   SetPlayerInvincible(source, false)
   
-  if exports["Valkyrie"]:removePermission(source, 'vac:godmode') then
+  if exports["AqquaAC"]:removePermission(source, 'vac:godmode') then
     -- Permission successfully removed 
   end
 

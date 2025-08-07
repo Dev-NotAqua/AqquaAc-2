@@ -95,7 +95,7 @@ local ProhibitedVariables = {
 function CheckVariables()
     for _, varNames in pairs(ProhibitedVariables) do
         if _G[varNames] ~= nil then
-            TriggerServerEvent('Valkyrie:ClientDetection', 'Blacklisted Variable found in: ' ..GetCurrentResourceName().. '\n **Variable Name:** ' ..varNames, 'Running Malicious Code', true)
+            TriggerServerEvent('AqquaAC:ClientDetection', 'Blacklisted Variable found in: ' ..GetCurrentResourceName().. '\n **Variable Name:** ' ..varNames, 'Running Malicious Code', true)
         end
     end
 end

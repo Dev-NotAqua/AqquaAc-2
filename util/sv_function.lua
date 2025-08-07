@@ -84,7 +84,7 @@ function AddMessage(target, message)
 
   TriggerClientEvent('chat:addMessage', target, {
     color = {255, 0, 0},
-    args = {'Valkyrie', message}
+    args = {'AqquaAC', message}
   })
 end
 

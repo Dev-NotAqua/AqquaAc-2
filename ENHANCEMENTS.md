@@ -7,18 +7,18 @@ This document outlines the enhanced anti-cheat features that have been added to 
 ### 1. Enhanced Speed Detection (On-Foot)
 - **Purpose**: Detects players moving at abnormal speeds while not in a vehicle
 - **Configuration**:
-  - `valkyrie_maximum_speed_strikes`: Maximum strikes before triggering detection (default: 5)
-  - `valkyrie_maximum_on_foot_speed`: Maximum allowed speed on foot (default: 15)
+  - `aqqua_maximum_speed_strikes`: Maximum strikes before triggering detection (default: 5)
+- `aqqua_maximum_on_foot_speed`: Maximum allowed speed on foot (default: 15)
 - **Detection**: Monitors player speed every 2.5 seconds when not in a vehicle
 
 ### 2. Enhanced Health and Armor Detection
 - **Purpose**: Detects abnormal health/armor values and rapid regeneration while minimizing false positives
 - **Configuration**:
-  - `valkyrie_maximum_health_strikes`: Maximum strikes for abnormal health (default: 3)
-  - `valkyrie_maximum_health`: Maximum allowed health value (default: 200)
-  - `valkyrie_maximum_armor`: Maximum allowed armor value (default: 100)
-  - `valkyrie_health_increase_threshold`: Threshold for rapid health increase detection (default: 120)
-  - `valkyrie_armor_increase_threshold`: Threshold for rapid armor increase detection (default: 110)
+  - `aqqua_maximum_health_strikes`: Maximum strikes for abnormal health (default: 3)
+- `aqqua_maximum_health`: Maximum allowed health value (default: 200)
+- `aqqua_maximum_armor`: Maximum allowed armor value (default: 100)
+- `aqqua_health_increase_threshold`: Threshold for rapid health increase detection (default: 120)
+- `aqqua_armor_increase_threshold`: Threshold for rapid armor increase detection (default: 110)
 - **Detection**: 
   - **Abnormal Health Values**: Detects players with health significantly above configured maximum (200 HP)
   - **Abnormal Armor Values**: Detects players with armor above configured maximum (100 AP)
@@ -127,15 +127,15 @@ The enhanced features are automatically configured through the updated `config.c
 ```cfg
 ### Enhanced Detection Options ###
 # Speed Detection Settings
-set valkyrie_maximum_speed_strikes 5
-set valkyrie_maximum_on_foot_speed 15
+set aqqua_maximum_speed_strikes 5
+set aqqua_maximum_on_foot_speed 15
 
 # Health and Armor Detection Settings
-set valkyrie_maximum_health_strikes 5
-set valkyrie_maximum_health 200
-set valkyrie_health_increase_threshold 120
-set valkyrie_maximum_armor 100
-set valkyrie_armor_increase_threshold 110
+set aqqua_maximum_health_strikes 5
+set aqqua_maximum_health 200
+set aqqua_health_increase_threshold 120
+set aqqua_maximum_armor 100
+set aqqua_armor_increase_threshold 110
 
 # Behavior Analysis Settings
 set vac:behavior:analysis_enabled true
@@ -202,4 +202,4 @@ To contribute additional detection methods:
 
 ---
 
-**Note**: These enhancements maintain compatibility with the existing AqquaAC/Valkyrie system while adding powerful new detection capabilities. All features can be individually enabled/disabled through configuration.
+**Note**: These enhancements maintain compatibility with the existing AqquaAC system while adding powerful new detection capabilities. All features can be individually enabled/disabled through configuration.

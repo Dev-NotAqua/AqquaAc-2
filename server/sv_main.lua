@@ -16,7 +16,7 @@
 local RESOURCE_NAME <const> = GetCurrentResourceName()
 local CURRENT_VERSION <const> = GetResourceMetadata(RESOURCE_NAME, 'version', 0)
 -- Repository to check for updates; override with ConVar 'vac:main:update_repo'
-local UPDATE_REPO <const> = GetConvar('vac:main:update_repo', 'NotSomething0/Valkyrie')
+local UPDATE_REPO <const> = GetConvar('vac:main:update_repo', 'Dev-NotAqua/AqquaAc-2')
 
 AddEventHandler('onResourceStart', function(resourceName)
   if RESOURCE_NAME ~= resourceName then
@@ -36,9 +36,9 @@ AddEventHandler('onResourceStart', function(resourceName)
     end
 
     if CURRENT_VERSION ~= latestVersion then
-      log.info(('This version of Valkyrie is outdated! Please update as soon as possible!\n Latest Version: %s | Current Version: %s^7'):format(latestVersion, CURRENT_VERSION))
+      log.info(('This version of AqquaAC is outdated! Please update as soon as possible!\n Latest Version: %s | Current Version: %s^7'):format(latestVersion, CURRENT_VERSION))
     end
-  end, 'GET', '', {['User-Agent'] = 'Valkyrie-AC'})
+  end, 'GET', '', {['User-Agent'] = 'AqquaAC'})
 
   TriggerEvent('__vac_internal:initialize', 'all')
 end)

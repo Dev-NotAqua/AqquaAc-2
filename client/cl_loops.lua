@@ -29,7 +29,7 @@ end)
 
 CreateThread(function()
   local strikes = 0
-  local maxStrikes = GetConvarInt('valkyrie_maximum_godmode_strikes', 5)
+  local maxStrikes = GetConvarInt('aqqua_maximum_godmode_strikes', 5)
 
   while permissions == nil do
     Wait(500)
@@ -61,13 +61,13 @@ CreateThread(function()
       end
     end
   end
-  return print('^6[INFO] [VALKYRIE]^7 Terminated GodMode thread user ' ..GetPlayerName(PlayerId()).. ' has elevated permission.')
+  return print('^6[INFO] [AQQUA]^7 Terminated GodMode thread user ' ..GetPlayerName(PlayerId()).. ' has elevated permission.')
 end)
 
 CreateThread(function()
   local strikes = 0
-  local maxStrikes = GetConvarInt('valkyrie_maximum_spectator_strikes', 5)
-  local camDistance = GetConvarInt('valkyrie_maximum_cam_distance', 200)
+  local maxStrikes = GetConvarInt('aqqua_maximum_spectator_strikes', 5)
+        local camDistance = GetConvarInt('aqqua_maximum_cam_distance', 200)
 
   while permissions == nil do
     Wait(500)
@@ -94,12 +94,12 @@ CreateThread(function()
       end
     end
   end
-  return print('^6[INFO] [VALKYRIE]^7 Terminated Spectator thread user ' ..GetPlayerName(PlayerId()).. ' has elevated permission.')
+  return print('^6[INFO] [AQQUA]^7 Terminated Spectator thread user ' ..GetPlayerName(PlayerId()).. ' has elevated permission.')
 end)
 
 
 CreateThread(function()
-  local maxModifier = GetConvarInt('valkyrie_maximum_modifier', 2)
+  local maxModifier = GetConvarInt('aqqua_maximum_modifier', 2)
 
   while permissions == nil do
     Wait(500)
@@ -125,17 +125,17 @@ CreateThread(function()
           end
         end
       end
-      return print('^6[INFO] [VALKYRIE]^7 Terminated Speed Modifier Thread improper configuration, MaximumSpeedModifier cannot be less than or equal to one.')
+      return print('^6[INFO] [AQQUA]^7 Terminated Speed Modifier Thread improper configuration, MaximumSpeedModifier cannot be less than or equal to one.')
     end
   end
-  return print('^6[INFO] [VALKYRIE]^7 Terminated Speed Modifier thread user ' ..GetPlayerName(PlayerId()).. ' has elevated permission.')
+  return print('^6[INFO] [AQQUA]^7 Terminated Speed Modifier thread user ' ..GetPlayerName(PlayerId()).. ' has elevated permission.')
 end)
 
 -- Enhanced Speed Detection (On Foot)
 CreateThread(function()
   local strikes = 0
-  local maxStrikes = GetConvarInt('valkyrie_maximum_speed_strikes', 5)
-  local maxSpeed = GetConvarInt('valkyrie_maximum_on_foot_speed', 15)
+  local maxStrikes = GetConvarInt('aqqua_maximum_speed_strikes', 5)
+        local maxSpeed = GetConvarInt('aqqua_maximum_on_foot_speed', 15)
 
   while permissions == nil do
     Wait(500)
@@ -162,19 +162,19 @@ CreateThread(function()
       end
     end
   end
-  return print('^6[INFO] [VALKYRIE]^7 Terminated Speed Detection thread user ' ..GetPlayerName(PlayerId()).. ' has elevated permission.')
+  return print('^6[INFO] [AQQUA]^7 Terminated Speed Detection thread user ' ..GetPlayerName(PlayerId()).. ' has elevated permission.')
 end)
 
 -- Enhanced Health and Armor Detection
 CreateThread(function()
   local strikes = 0
-  local maxStrikes = GetConvarInt('valkyrie_maximum_health_strikes', 5)
-  local maxHealth = GetConvarInt('valkyrie_maximum_health', 200)
-  local maxArmor = GetConvarInt('valkyrie_maximum_armor', 100)
+  local maxStrikes = GetConvarInt('aqqua_maximum_health_strikes', 5)
+        local maxHealth = GetConvarInt('aqqua_maximum_health', 200)
+        local maxArmor = GetConvarInt('aqqua_maximum_armor', 100)
   local lastHealth = 0
   local lastArmor = 0
-  local healthIncreaseThreshold = GetConvarInt('valkyrie_health_increase_threshold', 120)
-  local armorIncreaseThreshold = GetConvarInt('valkyrie_armor_increase_threshold', 110)
+  local healthIncreaseThreshold = GetConvarInt('aqqua_health_increase_threshold', 120)
+        local armorIncreaseThreshold = GetConvarInt('aqqua_armor_increase_threshold', 110)
   local rapidIncreaseCount = 0
   local lastIncreaseTime = 0
 
@@ -240,5 +240,5 @@ CreateThread(function()
       lastArmor = currentArmor
     end
   end
-  return print('^6[INFO] [VALKYRIE]^7 Terminated Health/Armor Detection thread user ' ..GetPlayerName(PlayerId()).. ' has elevated permission.')
+  return print('^6[INFO] [AQQUA]^7 Terminated Health/Armor Detection thread user ' ..GetPlayerName(PlayerId()).. ' has elevated permission.')
 end)
