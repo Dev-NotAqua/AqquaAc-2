@@ -154,7 +154,7 @@ RegisterCommand('vac:clear', function(source, args)
   log.info(('[COMMAND]: %s has just cleared %s'):format(name, action))
 end, true)
 
-local RequestQueue = VCache:new('any', 'any')
+local RequestQueue = CCache:new('any', 'any')
 
 RegisterCommand('vac:request', function(source, args)
   if source == 0 then

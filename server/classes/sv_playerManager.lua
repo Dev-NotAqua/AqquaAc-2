@@ -16,7 +16,7 @@
 local RESOURCE_NAME <const> = GetCurrentResourceName()
 
 -- PlayerCache | key: player source | value: VPlayer
-PlayerCache = VCache:new('number', 'table')
+PlayerCache = CCache:new('number', 'table')
 
 function PlayerCache:initialize()
   local players = GetPlayers()
@@ -50,7 +50,7 @@ AddEventHandler('playerDropped', function()
 end)
 
 -- BanCache | key: Ban Id | value: Ban Data
-BanCache = VCache:new('string', 'table')
+BanCache = CCache:new('string', 'table')
 
 function BanCache:initialize()
   local handle = StartFindKvp('vac_ban_')
