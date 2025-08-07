@@ -10,6 +10,8 @@ local GetFinalRenderedCamCoord = GetFinalRenderedCamCoord
 local GetVehiclePedIsIn = GetVehiclePedIsIn
 local GetVehicleTopSpeedModifier = GetVehicleTopSpeedModifier
 local GetVehicleCheatPowerIncrease = GetVehicleCheatPowerIncrease
+local GetEntitySpeed = GetEntitySpeed
+local IsPedInAnyVehicle = IsPedInAnyVehicle
 
 AddEventHandler('playerSpawned', function()
   TriggerServerEvent('vac_player_activated')
@@ -127,4 +129,116 @@ CreateThread(function()
     end
   end
   return print('^6[INFO] [VALKYRIE]^7 Terminated Speed Modifier thread user ' ..GetPlayerName(PlayerId()).. ' has elevated permission.')
+end)
+
+-- Enhanced Speed Detection (On Foot)
+CreateThread(function()
+  local strikes = 0
+  local maxStrikes = GetConvarInt('valkyrie_maximum_speed_strikes', 5)
+  local maxSpeed = GetConvarInt('valkyrie_maximum_on_foot_speed', 15)
+
+  while permissions == nil do
+    Wait(500)
+  end
+
+  if not permissions then
+    while true do
+      Wait(2500)
+      local playerPed = PlayerPedId()
+      
+      if not IsPedInAnyVehicle(playerPed, false) then
+        local speed = GetEntitySpeed(playerPed)
+        
+        if speed > maxSpeed then
+          strikes = strikes + 1
+          
+          if strikes >= maxStrikes then
+            TriggerServerEvent('vac_detection', 'Speed Hack', 'Abnormal on-foot speed detected: ' .. tostring(speed), true)
+            strikes = 0
+          end
+        else
+          strikes = math.max(0, strikes - 1)
+        end
+      end
+    end
+  end
+  return print('^6[INFO] [VALKYRIE]^7 Terminated Speed Detection thread user ' ..GetPlayerName(PlayerId()).. ' has elevated permission.')
+end)
+
+-- Enhanced Health and Armor Detection
+CreateThread(function()
+  local strikes = 0
+  local maxStrikes = GetConvarInt('valkyrie_maximum_health_strikes', 5)
+  local maxHealth = GetConvarInt('valkyrie_maximum_health', 200)
+  local maxArmor = GetConvarInt('valkyrie_maximum_armor', 100)
+  local lastHealth = 0
+  local lastArmor = 0
+  local healthIncreaseThreshold = GetConvarInt('valkyrie_health_increase_threshold', 120)
+  local armorIncreaseThreshold = GetConvarInt('valkyrie_armor_increase_threshold', 110)
+  local rapidIncreaseCount = 0
+  local lastIncreaseTime = 0
+
+  while permissions == nil do
+    Wait(500)
+  end
+
+  if not permissions then
+    while true do
+      Wait(3000)
+      local playerPed = PlayerPedId()
+      local currentHealth = GetEntityHealth(playerPed)
+      local currentArmor = GetPedArmour(playerPed)
+      local currentTime = GetGameTimer()
+      
+      -- Check for abnormal max health (only if significantly above normal)
+      if currentHealth > maxHealth then
+        strikes = strikes + 1
+        
+        if strikes >= maxStrikes then
+          TriggerServerEvent('vac_detection', 'Health Hack', 'Abnormal health detected: ' .. tostring(currentHealth), true)
+          strikes = 0
+        end
+      -- Check for abnormal max armor
+      elseif currentArmor > maxArmor then
+        strikes = strikes + 1
+        
+        if strikes >= maxStrikes then
+          TriggerServerEvent('vac_detection', 'Armor Hack', 'Abnormal armor detected: ' .. tostring(currentArmor), true)
+          strikes = 0
+        end
+      else
+        -- Check for suspicious rapid increases (multiple large increases in short time)
+        local healthIncrease = currentHealth - lastHealth
+        local armorIncrease = currentArmor - lastArmor
+        local timeSinceLastIncrease = currentTime - lastIncreaseTime
+        
+        -- Only flag if increase is very large AND happens frequently
+        if (healthIncrease > healthIncreaseThreshold and timeSinceLastIncrease < 5000) or
+           (armorIncrease > armorIncreaseThreshold and timeSinceLastIncrease < 5000) then
+          rapidIncreaseCount = rapidIncreaseCount + 1
+          lastIncreaseTime = currentTime
+          
+          -- Only trigger after multiple rapid increases (reduces false positives)
+          if rapidIncreaseCount >= 3 then
+            if healthIncrease > healthIncreaseThreshold then
+              TriggerServerEvent('vac_detection', 'Health Hack', 'Suspicious rapid health increases detected', true)
+            else
+              TriggerServerEvent('vac_detection', 'Armor Hack', 'Suspicious rapid armor increases detected', true)
+            end
+            rapidIncreaseCount = 0
+          end
+        else
+          -- Reset counters if no suspicious activity
+          strikes = math.max(0, strikes - 1)
+          if timeSinceLastIncrease > 10000 then -- Reset after 10 seconds of normal behavior
+            rapidIncreaseCount = 0
+          end
+        end
+      end
+      
+      lastHealth = currentHealth
+      lastArmor = currentArmor
+    end
+  end
+  return print('^6[INFO] [VALKYRIE]^7 Terminated Health/Armor Detection thread user ' ..GetPlayerName(PlayerId()).. ' has elevated permission.')
 end)
