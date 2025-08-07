@@ -5,7 +5,7 @@ lua54 'yes'
 
 game 'gta5'
 
-author 'https://github.com/NotSomething0'
+author 'Aqqua Anti-Cheat'
 
 description 'Open source FiveM Anti-cheat'
 
